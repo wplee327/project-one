@@ -1,0 +1,467 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="PlaceOrder" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="customerOrder" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="order" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="invoice" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="dbConnection" Type="InArgument(ui:DatabaseConnection)" />
+    <x:Property Name="clientId" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2446,4844</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>PlaceOrder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="37">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="32">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="PlaceOrder" sap:VirtualizedContainerService.HintSize="2456,4739" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="itemName" />
+      <Variable x:TypeArguments="x:String" Name="itemQuantity" />
+      <Variable x:TypeArguments="x:String" Name="itemPrice" />
+      <Variable x:TypeArguments="x:String" Name="subtotal" />
+      <Variable x:TypeArguments="x:String" Name="pegaOrderNumber" />
+      <Variable x:TypeArguments="sd:DataTable" Name="clientInfo" />
+      <Variable x:TypeArguments="x:String" Name="address" />
+      <Variable x:TypeArguments="x:String" Name="zipCode" />
+      <Variable x:TypeArguments="x:String" Name="phoneAreaCode" />
+      <Variable x:TypeArguments="x:String" Name="phoneNumber" />
+      <Variable x:TypeArguments="x:Double" Name="commissionAmount" />
+      <Variable x:TypeArguments="x:Double" Name="invoiceTotal" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Parallel sap:VirtualizedContainerService.HintSize="2414,134" sap2010:WorkflowViewState.IdRef="Parallel_1">
+      <ui:BuildDataTable DataTable="[order]" DisplayName="Build Order Data Table" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;product_name&quot; msdata:Caption=&quot;&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;product_quantity&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;                &lt;xs:element name=&quot;product_price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      <ui:BuildDataTable DataTable="[invoice]" DisplayName="Build Invoice Data Table" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;pega_order_number&quot; msdata:Caption=&quot;&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;total&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;commission&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[clientInfo]" DisplayName="Run query" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select * from [client] left join [payment_method] on [client].id = [payment_method].client_id where [client].id = @client_id">
+        <ui:ExecuteQuery.Parameters>
+          <InArgument x:TypeArguments="x:String" x:Key="client_id">
+            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="clientId" />
+          </InArgument>
+        </ui:ExecuteQuery.Parameters>
+      </ui:ExecuteQuery>
+    </Parallel>
+    <uix:NApplicationCard WebDriverMode="{x:Null}" AttachMode="ByInstance" DisplayName="Use Browser Firefox: Quick Order | Pega Studio Training Web Application" sap:VirtualizedContainerService.HintSize="2414,1301" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="Simulate" ScopeGuid="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="549,1085" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[customerOrder]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="507,991" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="item" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473,875" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:MultipleAssign DisplayName="Get Item Name And Quantity" sap:VirtualizedContainerService.HintSize="431,131" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                      <ui:MultipleAssign.AssignOperations>
+                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                            <ui:AssignOperation.To>
+                              <OutArgument x:TypeArguments="x:String">[itemName]</OutArgument>
+                            </ui:AssignOperation.To>
+                            <ui:AssignOperation.Value>
+                              <InArgument x:TypeArguments="x:String">[item("Product Name").ToString.Replace("'", "&amp;apos;")]</InArgument>
+                            </ui:AssignOperation.Value>
+                          </ui:AssignOperation>
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                            <ui:AssignOperation.To>
+                              <OutArgument x:TypeArguments="x:String">[itemQuantity]</OutArgument>
+                            </ui:AssignOperation.To>
+                            <ui:AssignOperation.Value>
+                              <InArgument x:TypeArguments="x:String">[item("Quantity").ToString]</InArgument>
+                            </ui:AssignOperation.Value>
+                          </ui:AssignOperation>
+                        </scg:List>
+                      </ui:MultipleAssign.AssignOperations>
+                    </ui:MultipleAssign>
+                    <uix:NGetText DisplayName="Get Text 'Price'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NGetText_1" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                      <uix:NGetText.Target>
+                        <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1130, 367, 89, 86" ElementType="Text" FriendlyName="'$1.00'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='3' tag='TD' rowName=' Chai View ' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl isleaf='1' type='' tag='TD' rowName=' {0} View ' class='' /&gt;&quot;, itemName)]" Guid="50050449-52e7-482b-9e4a-aefe2cad4f15" InformativeScreenshot="12daf034ed51992d5ff511251c5145f7.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target DesignTimeRectangle="601, 378, 25, 14" FriendlyName="'Chai'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='B' aaname='Chai' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl type='' tag='B' aaname='Chai' class='' check:text='{0}' /&gt;&quot;, itemName)]" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB0AAAASCAYAAACnxdXaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADHSURBVEhL7ZLbDcMgDEW7Fl2G7OJRyCZkEhZxndo8nLoEVUnzkyshAcaca8MDL9ANPVUf0AUcPl0dECWQAk60nkKSjUFF0PeQGmjC2RPIB5rJTvCU4HFeN36FGqpQw5FShvrVCHehNcAGa4dKrFepqsqSQLkT0hUHuJRYzeUnklgPqg5a2rTXPC8AHmLiiEpNaO6CrDk2ALWCSh3o1rAy1IV+/b2SsAvNF0cEmo9V+lb+IHWUw9031XkADWgf+h/d0FN1ARTxBWwGUV9PedjKAAAAAElFTkSuQmCC" SearchSteps="FuzzySelector" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NGetText.Target>
+                      <uix:NGetText.Text>
+                        <OutArgument x:TypeArguments="x:String">[itemPrice]</OutArgument>
+                      </uix:NGetText.Text>
+                    </uix:NGetText>
+                    <uix:NSelectItem DisplayName="Select Quantity" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NSelectItem_1" Item="[itemQuantity]" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                      <uix:NSelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="20">
+                          <x:String>1</x:String>
+                          <x:String>2</x:String>
+                          <x:String>3</x:String>
+                          <x:String>4</x:String>
+                          <x:String>5</x:String>
+                          <x:String>6</x:String>
+                          <x:String>7</x:String>
+                          <x:String>8</x:String>
+                          <x:String>9</x:String>
+                          <x:String>10</x:String>
+                          <x:String>11</x:String>
+                          <x:String>12</x:String>
+                          <x:String>13</x:String>
+                          <x:String>14</x:String>
+                          <x:String>15</x:String>
+                          <x:String>16</x:String>
+                          <x:String>17</x:String>
+                          <x:String>18</x:String>
+                          <x:String>19</x:String>
+                          <x:String>20</x:String>
+                        </scg:List>
+                      </uix:NSelectItem.Items>
+                      <uix:NSelectItem.Target>
+                        <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1254, 377, 40, 20" ElementType="DropDown" FriendlyName="'1'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='SELECT' rowName=' Chai View ' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl type='' tag='SELECT' rowName=' {0} View ' class='' aaname='' /&gt;&quot;, itemName)]" Guid="1f214fa0-56be-4eb7-94b2-11f76e35988b" InformativeScreenshot="0e2d899b87def80ea78de8c69b898515.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target DesignTimeRectangle="601, 378, 25, 14" FriendlyName="'Chai'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='B' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl type='' tag='B' class='' aaname='{0}' /&gt;&quot;, itemName)]" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB0AAAASCAYAAACnxdXaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADHSURBVEhL7ZLbDcMgDEW7Fl2G7OJRyCZkEhZxndo8nLoEVUnzkyshAcaca8MDL9ANPVUf0AUcPl0dECWQAk60nkKSjUFF0PeQGmjC2RPIB5rJTvCU4HFeN36FGqpQw5FShvrVCHehNcAGa4dKrFepqsqSQLkT0hUHuJRYzeUnklgPqg5a2rTXPC8AHmLiiEpNaO6CrDk2ALWCSh3o1rAy1IV+/b2SsAvNF0cEmo9V+lb+IHWUw9031XkADWgf+h/d0FN1ARTxBWwGUV9PedjKAAAAAElFTkSuQmCC" SearchSteps="FuzzySelector, Image" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NSelectItem.Target>
+                    </uix:NSelectItem>
+                    <uix:NClick ClickType="Single" DisplayName="Click 'Order'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                      <uix:NClick.Target>
+                        <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1239, 412, 70, 30" ElementType="Button" FriendlyName="'Order'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='INPUT' type='submit' rowName=' Chai View ' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl class='' tag='INPUT' type='submit' rowName=' {0} View ' aaname='Order' check:text='Order' /&gt;&quot;, itemName)]" Guid="54455508-0eab-4a65-874f-073b5bd34855" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEoAAAAiCAYAAAD4d09GAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFGSURBVGhD7ZVLTsNAEAVzLg7EeRDXYM+SM7BnwxFYIj4xehENlVFPZ4hjhVivpJJg2jaaijNsJjOEQw3iUIPshdrcvlpIHKqQOFQhcahC4lCFxKEKiUMVEocqJA5VSBYLdXX39v3UX7SWXVv59LLd3ZvNlpYsEur64X33vJvHj581/Sw047WHXHUooQ2268dserWhsrcpbN8qESGE1viVvX/+TEOR9gOJtYCzv0pOHqr6irURA55dIjbPaNm897s45jxsJWcPxU22cxlvR28efy/CCD5zjuRffPV6c8lQMc/oPXOO5KyHueB1WWTeU30IobiYULEhHcaxlr0tot0U1+I5IptLhszmcySLhJI8iIP2gBXtpnjfyH890c4uKtQaJA5VSByqkDhUIXGoQuJQhcShColDFRKHKiR7oUwfhxrEoYaYpi+5xyUkARkH9wAAAABJRU5ErkJggg==" InformativeScreenshot="98201b3845c1c64c45a7c30125d21d6f.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target DesignTimeRectangle="601, 378, 25, 14" FriendlyName="'Chai'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='B' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl type='' tag='B' class='' aaname='{0}' /&gt;&quot;, itemName)]" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB0AAAASCAYAAACnxdXaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC0SURBVEhL7ZLtDYUgDEVdS5fRXRjFt4lOwiKYS3LNfVgrMX788SSNYimnjTTpBT7prWykIYTUte0a8zTl7zHGvP6NY17Xgno9B/xJh77PQSBAAYRnpRar1OpIoRRN4Vk2wAbLnDupTmWhUkA5YI61/EXAlepGCx7MCaz9FDBQc8mklpQ5rpk7lFpJxZOWDWvOlYK924uCGikPxjvicFKit1M3e1Kgdcyhtkr6BJ/0Vl6QprQAXV5Rk03wbRkAAAAASUVORK5CYII=" SearchSteps="FuzzySelector" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NClick.Target>
+                    </uix:NClick>
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{itemName.Replace(&quot;&amp;apos;&quot;, &quot;'&quot;), itemQuantity, itemPrice.Substring(1)}]" DataTable="[order]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="431,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="0, 0, 0, 0" BrowserType="Firefox" IconBase64="iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABo0lEQVR42u1WsUrEQBBNIYiFuI3d4eUQtPJMo42FaUWE/YR0toEDG5s01gtX2qS0zB+YL5B8wvoH2163ZsNMGJbdJKceWuzAI5fZ7LzZN5O5RFGwYMGC7chO53EKiH87cNwib1G1KBykxq8tSLPnp8SJJ3gK65ljjaJpwb5LXgwENqfmI+S9EtsSM8icSmkHtZ/xQcE130ZySTa7yGvoiSFCF7IpjaYc5J3vKHvV0XqDEC3UwepdHT88qcX5Uk0sRzZVdtpEenZ9rwi5QW3d68PHNz2/uKH7aoci0pdAReotYWO/eXZ1R8kaSMBGt26UWpwtNcRkUNYC4gkXee6QvSFX4y/b4OloE603iSnP/vOHMkk7CQfqLh1Xju8xeS1RJSNx4kmE7b18ipPLWzmWQE2CYiIVDBjmmgvkXoMvxcFkTUcjPbd8rJ+k1iCRIDefMJgaogImLOAAHGtNysjhWeyDGrseAwivlMMKJFbH1xjTOmDVkdIY8KOcQuxLAHwCSCtoZgaJNOSAONxKVGXXf8kF9FCXyF98E8TYhOELKViwf2tfx4R/4E2lrUIAAAAASUVORK5CYII=" InformativeScreenshot="0fb8a47fb4d5ef1c30d882442e300cb2.png" Selector="&lt;html app='firefox.exe' url='https://training.openspan.com/order/quick_order' /&gt;" Url="https://training.openspan.com/order/quick_order" />
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="2414,193" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[address]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientInfo.Rows(0)("address").ToString.Split(","c).First]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[zipCode]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientInfo.Rows(0)("address").ToString.Split(","c).Last.Substring(4)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[phoneAreaCode]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientInfo.Rows(0)("phone_number").ToString.Substring(0, 3)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[phoneNumber]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientInfo.Rows(0)("phone_number").ToString.Substring(3)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <uix:NApplicationCard WebDriverMode="{x:Null}" AttachMode="ByInstance" DisplayName="Use Browser Firefox: Quick Order | Pega Studio Training Web Application" sap:VirtualizedContainerService.HintSize="2414,2637" sap2010:WorkflowViewState.IdRef="NApplicationCard_2" InteractionMode="Simulate" ScopeGuid="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="2380,2421" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Cart'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_2" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1177, 100, 52, 22" ElementType="Icon" FriendlyName="'IMG'" FullSelectorArgument="&lt;webctrl parentid='cart_menu' tag='IMG' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='cart_menu' tag='IMG' type='' class='' aaname='Cart' /&gt;" Guid="e9a745cb-5220-4e08-a7eb-71948c3a98bf" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAADgAAAAaCAYAAADi4p8jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAaSSURBVFhH3ZZ7UFR1FMfvKLCwYJJmU2A1zeRM02NqKqeZ+qep0XEmsqnMHlNZWj6QVJTSlIc81FHMrOypmGZGhpCuiBu+1hfISx6KKLBeF5ZdXBAxQB67y7ffOXf3cjHEfM0UZ+Yz5/7OOfec3/nd+/vdKwWFfYuBjBQ0/kcMZKTAV1JADJ+4AY/M+B2Phqfhvkmb2TYQkAJf2wBiy0EzvHKqthlPz93O9qAJiv9mEiQInrhR8PMNQjl6GPr6xn/MVwqc+AsIr3S53KwTt5Sy/f+OpH8zFUTk+kLkVzWi7OwFdHS58etBGcHvbGHfzeahiAxEbziM2I05iP1ZIW7TtUH3rEwrwOdb87FqayGWpObhk7UHEDo5rVctSf+2MHi4b7oBoyIyYSp34ERNM4ZNylB9N4uQKekwFVXyW3IrJHXvCdzxfrpaTwp4NwOX8122Ge7ubuwqtmNHkQ1ZQu88ZkdGvhXpeVa+Jlum8KUdrcW2gjqOpTH5jCV2pOyT8XT0Xs6nf68n97jEPejs7IJIL2q4he7m6+vB5e5WcbqEQYilzoaR07er9aSASQZ4CZ6SCf37BsSmVSjBjZdQVd8K87lWyI42dDrd3PjZhjZU2ltQI/wkf7U7ccrWwjHVIp58JOn5dZx3qMhLOuiDHRiXZBKTUfK4xcS0E74RXG5aLECuteGemVlqT5L/5J3wEvRhFuv3fijmCb6xpgjB03ZhRPifCJmVDWOZA8WWi3ggai+GfJSFRz8zcdIvjGa+L3TWbgybbsTDC/azfc1ume0Uq5+i1Aj/IQcu0SD5lQbFRb9Sg6/DxiIgLBXVHsvlQjlowUiowdCIXVyLkPw/NMJL4NQ/Wb+wPA/t4qCJ+q1C9RGG4nMolMXeDN/N49A5+zhpkqG6V9yrXxXBKSY/OaWMx0OmKXnDVhyEbHVwcwpXaw6o/n4aAu7vv0ESWiySs1Y7Rs7OVuci+U/bAy/66XtZP7joCMyOS9hR4sDoxKMYnXAUzyzNx8HTTThpa8ULyYV4LC4XL64+xknXH6rDQ9FH8OyyfDwZfxSbcmxobOnCU+I+b+7xKw+L1T3H8dSXd8X7lTOpeC5sGWZe5QmS9Gowcp9aV9LN2A8v/uGKDoow4Uh1s/gmdqNBTPR8axea2py8B+nJXLjk5AaahSahp01xFEOa4irsbQgIN3G+l1floKrWzrF0IPTsvf6aVF7NmXuu/oqSaBsMnXdA7UnSRRyClqDZh1kbShv5hhiDjPkZZxC9XeZJWy90IGGnBVHpZiwz1nDM/tMXEJlm5th44SPZLu6nPP4fH8L41XmiwXq2/9sG+dXkpq6jwU+VHgjJb1YOtARG5rJeY7LxJO6cn89j3ewcGMrOo9DSgmGf5LFt5KICTrrEWKve//jSErR0uBCbaeGxfo5if+nLAt5/JJTXM58riKcp2nta+mlS22DIAqUHQvKLFA1o0M8rYB2ZYeGJPJV8QvVtLTmPXLlFHQdGFXBMdKZo0GNLyVUOkSdWHFdturmKfvHrY5Bt13bI/JtTlERtsE40uFCpR0i+84qgRRel6PHrqtHW6Yap+i98f8SBtbkNsDR1oqHViQ35jWzbVHCekxZb29hvrLjI428PO3rl1Oadsen4LfpMKNeyeIJ3R/fUlXw/LYEWv/mKfiS5AuX17cpfgoB0c7tLHDAudcyHkGi4RSwEjWkBZv1hReBnpWoeLf4LSjFmTTn/dYhwzV68cag+aWowJK5UrSn5LjiBKxGwsBzBsSdZD4kux/C4kwzZiNsFNCb/bTHlfea4nDHfnNT8qilPkK6vB2rKCy06iUW8onctPq7Wk3wWVaAv/KIrMHa9BTG7HZiw2YqA2FN9xhHPr7Mgbk8D3kq14rbFp/uM8TIivhz7ypST9lbI5hwZQ8Wie+tJPjFV0KKLU/TUbcpH2StLTU29/L6xip7wq80TocjKQ03w8/iuxKjkSizcVoVFBvH58RCz49qge1Zky0jOPoNk8UuYmCVj7tZK3JlU2auWNHjxGWjxi1f0fpn2H3h/0eMvsXdi6NKz7PPxxOoSZGwua2F/u9OzJ9tcatx/AWlwQg206JIU/VNxKz8RmjRJtrkd+iW18E3siaXr+APKydnhicut7eQ4b0xf+CRY4C/q+CfV3iCUowedmI/PZbWkQUl10DLYo+/9sh5Gcwdv5gKb+K9c5+jl9xKy2o5tp9r5VCxvcGJ0ihL3X0EatKweAxlp0PJGDFwa8TeUxPjbf6AJDgAAAABJRU5ErkJggg==" InformativeScreenshot="eacd255918602a37c2924e9674d6a9db.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <uix:NGetText DisplayName="Get Text 'Total'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NGetText_2" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NGetText.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="1181, 873, 92, 15" ElementType="Text" FriendlyName="'$26.00'" FullSelectorArgument="&lt;webctrl id='total_value' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl id='total_value' tag='SPAN' type='' class='' /&gt;" Guid="da3f36b7-8d0c-4e40-b66c-d9112e80cfb7" InformativeScreenshot="b34eebf5299597aeb69702bf2ed9224d.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive" />
+              </uix:NGetText.Target>
+              <uix:NGetText.Text>
+                <OutArgument x:TypeArguments="x:String">[subtotal]</OutArgument>
+              </uix:NGetText.Text>
+            </uix:NGetText>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Next'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_3" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="925, 923, 70, 30" ElementType="Button" FriendlyName="'Next'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='button' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='button' class='next action-button' aaname='Next' check:text='Next' /&gt;" Guid="2559b877-4b24-4237-b23e-2c1fc49db9f6" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEoAAAAiCAYAAAD4d09GAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFmSURBVGhD7ZpBroIwFEXdlBMX5HrM38WPc4aswbkTluAQFXnysLc0bf2PAZCf5p7kJFAIicdXRuyEzIKhZuJD7X/vsvtpaaA2AT5U7kbaujoMZQoYyhAwlCFgKEPAUIaAoQwBQxkChjIEK4Z6SjU++SVHv/aQ0y1e+9+CDUKJXC8Pt7ZCqHMn1+aZv7aAYJNQU5iFQ2kkfVwRoZpujFPVupYLFQYduHVywDWESEL3cjrjGCw4pYFgg1DDv12/XIA4lLvHx4nPWzlcel0Zty+OP9EHy5oo/RGfQFUdhdKAA9M7DGF0YvCcaHLCKOWFcgHcNkQoTEgOPzWq34JhwGC9pFD+fOT7RKViO/bR+2qwzFDhBH17R8XvsFaOjZ67SXJhk/ilhZq2UDAVuM8TXEvCINy0NXGebMuFBCuGKkPAUIaAoQwBQxkChjIEDGUIGMoQMJQhYChD4EPxI43U7Eca5G8YahYib6PM9e/id82tAAAAAElFTkSuQmCC" InformativeScreenshot="e1d6960260651cffe217cc5c23a5aa0a.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <Parallel sap:VirtualizedContainerService.HintSize="2338,262" sap2010:WorkflowViewState.IdRef="Parallel_2">
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'First Name'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_1" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[clientInfo.Rows(0)(&quot;first_name&quot;).ToString]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="675, 533, 131, 24" ElementType="InputBox" FriendlyName="'INPUT bfirst_name'" FullSelectorArgument="&lt;webctrl id='bfirst_name' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='bfirst_name' tag='INPUT' type='text' class='input_middle_size' aaname='' /&gt;" Guid="c5ff3297-818d-429b-9d14-2807c8979b37" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIcAAAAcCAYAAABLRqyKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGuSURBVGhD7ZbtjYMwDIZvajbJGJkiSzABv9ghF5sQHBNzpS1U17yPZKnkw67wQ+AnAmAAOYBJkWOaJgSCY6WSAwDIAUwgBzCBHMAEcgATyAFMnpNjDtENQxwa4cd13kf6+VZyXRfmPJC5ql7nvCDHVc0/yJvlGPQayHEJ/1AOH0Nw9ekBOS7hGjnkPP12PnonnvjRi1eRi0ufx+h3Y4qSd44h5Sz19f+p8qfgdx1B+9KrL9B6Mcf79VpC/ieRvxNekGO9aSLWGyublddu95xuuGg+NdKF1LaEbrJGztO+Vj3OL+qxKGu9RY5SL6+t69drtxJO7OuDe06O6iRQzZOcycvNy3kP90kZ64YfXu9yKqk74CY59Nr8xOYozTmTl6Br2twaF/n1yfG4HDKHzNMHH5JDwMf+g2sb86NPzeRvCJlDNvFdJ0d/3C+Hbt5OjoOns1WXx+ipzuMyH1/KJ/6EHHquVfvL+czJwQ1sHdVLQ2h8a5jAqMsfi2V8y0Hhwmg3/M9r+fo7kPZLeU4O0AWQA5hADmACOYAJ5AAmkAOYmHIgEBQrRQ4ANJADGMT4C/Q6c4ZJYWc3AAAAAElFTkSuQmCC" InformativeScreenshot="c02ddbb8fc2f95e89adb736643edc757.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Last Name'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_2" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[clientInfo.Rows(0)(&quot;last_name&quot;).ToString]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="809, 533, 131, 24" ElementType="InputBox" FriendlyName="'INPUT blast_name'" FullSelectorArgument="&lt;webctrl id='blast_name' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='blast_name' tag='INPUT' type='text' class='input_middle_size' aaname='' /&gt;" Guid="d6ca3c1e-d561-4d1f-a36c-a6f86af7beb9" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIcAAAAcCAYAAABLRqyKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVGhD7ZfbecMgDEY7tTdhDKZgCU/gJ+9ALZmLwBaO05C24T/fxwM3yUHHJPnyAChADqCS5FiWBQ2NW6SQAwDIAVQgB1CBHEAFcgAVyAFUnpNjdd5M1s+h+xY45+SNW8NA4DeeZRD+jhxXMYMcU70GcnTjn8lhvXOmvD0gRzf6yDHb7Q2ntzw0K1YWc8bvdZ69PYxVpJyrd0bkrp9FzU37Jm8drRdzvL9eS8hnGlO+DnLsh5rOmYslJRDFpznjtrJtXAkn52lfTFDsa+Xe5Uj5wtoyf7k2pzBi3zj0uTkKpBBV8SR35ODihZjNfTJ3WfBm/xBTxhmHPnLwfLySqcmDDW9saKk4D8UU89SnzWfjIn59czwuh4wh44zD6+XguVoG5WD52g9xWjGJk/nZbsXk3xAyhpb7rhyNZxmE18shC85d8dbVxTvIoUhEnOXkMYofxlu578hRz7U+7wfzAznidZvb/hdzP9g8NpcHzQWM81KGvC8XTKAUiH8spvFW7qrgl3359deQ9oN5Tg4wBJADqEAOoAI5gArkACqQA6iocqChUYskOQCogRxAwftvnSZ3GEq3Gg8AAAAASUVORK5CYII=" InformativeScreenshot="57e0d7ab6234a06ca650c5d5cff3280a.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Address'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_3" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[address]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="675, 611, 264, 24" ElementType="InputBox" FriendlyName="'INPUT bstreet_address'" FullSelectorArgument="&lt;webctrl id='bstreet_address' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='bstreet_address' tag='INPUT' type='text' class='input_long_size' aaname='' /&gt;" Guid="86a59d57-e679-465b-be35-90470cc10558" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAQwAAAAcCAYAAACULYG8AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI1SURBVHhe7dlhjoMgEIbhPbU38Ricwkt4gv7qHVhAsAMCjrjJmvR9En7oWIqbzCd2fywAKBEYANT2wHi9XgwGg1EdSRYYAFAiMACoERgA1AgMAGoEBgA1AgOA2o3AeNtlnuw0iWHWWHuI1bh1zXZ5x+Om1Zrmdb0a8F2GA2M1ZUDEAEnn3oudJ+Pa7Y+p593WY4wLjdMgIzAAjcHAaDSRbOb/Dox0nep6AgPQGAyMYjdx4JssvqakZvONOxtrwmtMamB5XdnUtVpl3ob3Mu/r87uhubw4vK7EudwuJAuFVu3qPch5yvX2asBDDQaGJxvFjTI8yid7OHavCJ8T2ytDPA4NPi/ubDhq10Z2DL4597m9be3Z/Pv1ndqle+it4Wx9wDPdCAxpa7IsOKqBIZrk0PiiiS7VKk4Col6P8/dqV+6h/M5MrwY81x8FRiQbqmym6rHYoYQhP9ur9QIjvi4dPu9G7NB8J+B9Gr1XO3x3b53BFgyplgdErwY801hg+KdwtWnFFr3aXJ1jabTmterhfGzmWzsM5T2Umn8zp1cDHmRwhxGf4llj+f4RT2fZoPuxbIr8/T+vd2rlvIXjv3s/Pj9+bk/3dFn2O0WvduUeynXKUOjVgAcbDIxNaE6xrc4DJIZKar5Ds3lyW16GQKtWzJsRu4GaQ9Nu88zLkn+uVbt6D+H7BmrAQ90KDADfhcAAoEZgAFAjMACoERgA1AgMAGrNwGAwGIzaSPbAAIAzBAYAJWt/AQ0Fr1/G+wdoAAAAAElFTkSuQmCC" InformativeScreenshot="37c0473f0f08e1a28853306aec020628.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Zip Code'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_4" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[zipCode]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="675, 650, 131, 24" ElementType="InputBox" FriendlyName="'INPUT bzip_code'" FullSelectorArgument="&lt;webctrl id='bzip_code' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='bzip_code' tag='INPUT' type='text' class='input_middle_size' aaname='' /&gt;" Guid="0f8e3a2d-caed-4019-aa9c-44cb5ac7c43f" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIcAAAAcCAYAAABLRqyKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGbSURBVGhD7ZfRrcMgDEXf1GzCGEzBEpkgX9mBFqc0xo551Mlf7pEsRXUwVXxi2r8CgAHkACZfOdZ1RSAoGp0cAEAOYAI5gAnkACaQA5hADmDik2NJJYSgIuatlC2XGFJZ6n10re8LIZZ66xC5NlFFB0tJM/sBxU2TozYgFOqfkuNzzSG5Bg2jPF+3lRy9gkAOL7fIsSTWuBk5Ps0+7zUTjUO1PE2GHF6uyyHf8qtyqKlhQLXbsSOaz4+9lIQcu3x7fmKfB3NRjpO3fEaOkQA1F/NbnxFi365en9tyfOeaHL2UlPt3r+dySY7uOGkoOdpbymMw5mfkUNKxo0OtZ7nROqDwy0EP+uTBKjl4MyYYTZWGEuCYCHoaSDl+EPXhOOXYm0F/XSVX5aBmiqOKYJ+rukyAnyYHGOGSY3hWX5bjU797o3cZjz2FQN206XOj3xze7/cUXHJQo2gki6hP/QY5CGq4qM2h2i0vjgaWizkfk4PY5TldBzpccoBnADmACeQAJpADmEAOYAI5gIkpBwJRo/GVAwAJ5AAGpbwAOwWatxlKyOMAAAAASUVORK5CYII=" InformativeScreenshot="c65fc54781d8582530b70cef3d8f9a5f.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Phone Area Code'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_5" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[phoneAreaCode]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="675, 689, 131, 24" ElementType="InputBox" FriendlyName="'INPUT barea_code'" FullSelectorArgument="&lt;webctrl id='barea_code' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='barea_code' tag='INPUT' type='text' class='input_middle_size' aaname='' /&gt;" Guid="c750f828-62f1-4e24-92ab-a75ff069d058" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIcAAAAcCAYAAABLRqyKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHgSURBVGhD7ZbRbcUgDEU7dTZhDKZgiUyQr+xAwQGCDUYNUVu13COhp4Qk+OGD4cMDoAA5gEqR4zgONDRqGSYHAJADqEAOoAI5gArkACqQA6i8l2O3ftuMd2e6/ilO5822hbFTs3vqeMru7W/E/wd4Kcfpndm8tUGQ6eRMQELakNbMFcdcDJBD450ctHpDkvJvuv29xGQGIeVgFMNMkiGHxis5TmfKat3t5k09wzFZxnobV3QR50rstRUImaga5L7QtCrQVA0Ftu2I5NdjharH5RjEuBgv5BArLk64caHAJ1Jy7hynLShdk1jleVENKHnKapbjdOl9jwvK4ihjjWJcj3k5miSJhMgyT9f1ShRyMQZ9X5FjNFY37tT3KMb/z6Qc6QAYZGjavez4RNO1fL6a+KZ/IAdLYIdGgLsitNVAylHHMIhjAebkaFZYgu7XEy3lUJJav0eMVmzsqypUobrfjFV971HlWJspOeLhUzswloNpM9F8P2f9ohrQ91U54qv1OSGSKllJuhCIfZ/3jc4cq8syJcdwH86J6E7slZi2XPNtyridJ6kHjXO/08hK4+d+EW/VZ5wT/0eLcT2m5ABrADmACuQAKpADqEAOoAI5gIoqBxpabJkiBwASyAEUvP8EdUF/uSTWeNsAAAAASUVORK5CYII=" InformativeScreenshot="a20c5696fed86c2f617ae35aa2fbf5d9.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Phone Number'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_6" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[phoneNumber]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="809, 689, 131, 24" ElementType="InputBox" FriendlyName="'INPUT bprimary_phone'" FullSelectorArgument="&lt;webctrl id='bprimary_phone' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='bprimary_phone' tag='INPUT' type='text' class='input_middle_size' aaname='' /&gt;" Guid="13d958d1-6711-43d3-91ad-a07e0e692ab9" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIcAAAAcCAYAAABLRqyKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH0SURBVGhD7ZjRccMgDIY7tTdhDJ47AEt4gjx5B2qpQCRAxIl9Dc393x13YJCRxI+c9isCYABxAJMijtvthobGLaPEAQDEAUwgDmACcQATiAOYQBzA5DVxbCG6ZYlL01wMW1pTwzY+rmn4do7EMJvPf8wJcXSStnqd3Jk5EgPEkXpXiCNuMbgl+v+QzSMxQBypd7U4aI3z0e/jhdYqm7Qu0LNUzsmI14hxhm9zei7nqj2+fWW3swXXPGOOxkBrxP7qVdLfzuco0N5p3qlyukZf7Ho+zMG14uAkpucpcSWZyub3ABYX9h6RkpXHvDYn+3euvKcp+9YehDjommZtohNDEZec6/ql7YoglJ32icVb8jAXJ8SRlS9bfXva29RL0OOxhA5FikPsUdupPSvOxtC8e+DXUbvJuLZySOo1avykONi2c4AdP+RnhPq6nAvOxkDVQN144fPIjvsyFhHPZMwvDraTyatvaO0HzdMzescg6WdjaOwHfg3t5mV+cajvNQ3HlYOgNfxjd/QtPx0DiUH43PzmsOyqWI/48SbmF0fq5xLswnqfs/zgg5Lv63A6hh0edz4Nj+z23v2vlUF1ezOviWN2msMAr/CR4jD/twGe4rPEUco8qsYVfGTlANcAcQATiAOYmOJAQ6OWKeIAoAbiAAYx/gBPHhoq7u/c0gAAAABJRU5ErkJggg==" InformativeScreenshot="5fd178ddebfed4c7cdc6ace3ac439b28.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+            </Parallel>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Ship to Billing Address'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="675, 729, 124, 14" ElementType="Text" FriendlyName="'Ship to Billing Address'" FullSelectorArgument="&lt;webctrl id='ship_to_bill' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ship_to_bill' tag='A' type='' class='' aaname='Ship to Billing Address' check:innerText='Ship to Billing Address' /&gt;" Guid="682befb0-7e92-46a5-b095-d3c7f4a9457b" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIAAAAASCAYAAACTkNaDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKZSURBVGhD7ZeNTcQwDIVvLRbqOicxw61QVmAHWIEB4A5kYuenL44d0uOQgPaTIiV1nbw4r4E70M6m2Q2wcXYDbJzdABtHGeCdpvtXOpR2pocUoZcL3eEY6cU8rs5BfbFNTxhPc470bwrX7o2OL2lo8kHHE+it6MV+DjBAPHwU8Pz4RofThZ55cOvCXTOflSPPjMLju7fWbvF0pmk+093jR3pg8ZsNYBYJXJ3i0/zFlyc5ZzqyeeQ966vAmwbz9DOFqZELV2uU+Gg/GPxo7UkATaew97xOQ9YQ3s8fTEHPgWs4MdEVx0P1CeaLz1fGAnADRAeWL14jhXul4nCe2LwdktAcEwHtwnUO0UM4BHNuROUIUixDx3DfX7fR5F3xPE/K4xw0UTvHEndjSZc3j9zM87v0Y72XmozHIu0/gUlIbLBhLBzTFDLHogEW8fCFIk0OzC1jLydrg/YtA8C61VhrcvYR4MJWB+kcQP7IYm06Ma2rqQfm6hjSi0VaAyAiJE3QK1ZTuHpR/VUIbj4zYpqMU7i1fUbHqlvIM0BcvzalM3+g1GJVjGuq1wAt8r7xnOnFAosBKucuuKJwXMW0AUYOk3P0hr/KWTA1ru0z1Vhr6uyjMgoa3ppjIKZ1Ne924HNUegpGDG4AXiSLy/CztOlesZrCBbdlM3mC1HxctOoaHciJOBrX9hk1bjQZpuTrv65ZgN9N+2/nWGrsxrSugFsf7DOjsYT6E5AOrzTYcK9YVSweyDT3fgUw+erEvLxuvfmCrJPfWVo5AE/TSJ/RY9Q0h18LzQ3Ae8D3M2DKss/Qml8BTqzRwWB9ah1sjvicW53XizH9/wGuAjf/jzAP5e+zG8AFvk5p/9DUgR8wwM5fYjfAxtkNsGmIPgHlEvvxiZ9N4QAAAABJRU5ErkJggg==" InformativeScreenshot="58a43866a4f0c28804c72250b2b06d3c.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Next'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_5" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="975, 797, 70, 30" ElementType="Button" FriendlyName="'Next'" FullSelectorArgument="&lt;webctrl id='next2_button' tag='INPUT' type='button' /&gt;" FuzzySelectorArgument="&lt;webctrl id='next2_button' tag='INPUT' type='button' class='next action-button' aaname='Next' check:text='Next' /&gt;" Guid="f1958911-e6d6-4722-9717-a074990cb9a6" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEoAAAAiCAYAAAD4d09GAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFmSURBVGhD7ZpBroIwFEXdlBMX5HrM38WPc4aswbkTluAQFXnysLc0bf2PAZCf5p7kJFAIicdXRuyEzIKhZuJD7X/vsvtpaaA2AT5U7kbaujoMZQoYyhAwlCFgKEPAUIaAoQwBQxkChjIEK4Z6SjU++SVHv/aQ0y1e+9+CDUKJXC8Pt7ZCqHMn1+aZv7aAYJNQU5iFQ2kkfVwRoZpujFPVupYLFQYduHVywDWESEL3cjrjGCw4pYFgg1DDv12/XIA4lLvHx4nPWzlcel0Zty+OP9EHy5oo/RGfQFUdhdKAA9M7DGF0YvCcaHLCKOWFcgHcNkQoTEgOPzWq34JhwGC9pFD+fOT7RKViO/bR+2qwzFDhBH17R8XvsFaOjZ67SXJhk/ilhZq2UDAVuM8TXEvCINy0NXGebMuFBCuGKkPAUIaAoQwBQxkChjIEDGUIGMoQMJQhYChD4EPxI43U7Eca5G8YahYib6PM9e/id82tAAAAAElFTkSuQmCC" InformativeScreenshot="571b447255b29633978f7e0399126511.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <Parallel sap:VirtualizedContainerService.HintSize="2338,262" sap2010:WorkflowViewState.IdRef="Parallel_3">
+              <uix:NSelectItem DisplayName="Select Item 'Credit Card Type'" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NSelectItem_2" Item="[clientInfo.Rows(0)(&quot;type&quot;).ToString]" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+                <uix:NSelectItem.Items>
+                  <scg:List x:TypeArguments="x:String" Capacity="3">
+                    <x:String>Card Type</x:String>
+                    <x:String>Visa</x:String>
+                    <x:String>Mastercard</x:String>
+                  </scg:List>
+                </uix:NSelectItem.Items>
+                <uix:NSelectItem.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="646, 575, 173, 20" ElementType="DropDown" FriendlyName="'Card Type'" FullSelectorArgument="&lt;webctrl tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='SELECT' type='' class='select_middle_size' aaname='' /&gt;" Guid="d6d528ef-761d-4f04-91d2-c86dca3a7cd2" InformativeScreenshot="7c4932aedcfd93fd23383724853e1f0a.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
+                    <uix:TargetAnchorable.Anchors>
+                      <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                        <uix:Target DesignTimeRectangle="646, 541, 644, 27" ElementType="Text" FriendlyName="'Credit CardBill Me'" FullSelectorArgument="&lt;webctrl idx='2' parentid='progressbar_container' tag='P' /&gt;" FuzzySelectorArgument="&lt;webctrl type='' parentid='progressbar_container' tag='P' class='' aaname=' Credit Card Bill Me ' check:innerText='Credit Card Bill Me' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAogAAAAfCAYAAABktTxoAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASkSURBVHhe7d2xjtRGHMdxSKgo8hI0eYWl4EFo9gAJKTxAJGpLqYigTEOK2yuhvStT7FXkqqNBaTZcDoEiJeKUSGnQDf6NPb7/2B7bYe29RXw/0ui8M2Pf7Lj5aca+u+IAAAAAg4AIAACACAERAAAAEQIiAAAAIgREAAAARFoD4unfH9yPB+/drR/eum++e+2LjlWnNlyes7N/3HL5wu3uPnePHz/1RceqUxsAAMC6GgHx2a//um8fnrrr93931+6t3NU7RdGx6tSmPti84+NXVShUefLkZ19snfoAAACsIwqICn43vv/DfX135W7/9Kdb/vafOz93vuhYdWpTH0LiZtlwuL//i3vz5l1+X8590bHqCIkAAGAMVUDU1rFWBxUAHx2clbVFOFQJ1KY+6pvcbl5m7uZsdlHmC3dSNq3nxO3NZy5b6nDhdmaZO/TV5rjNJsYzIW0dh/B3dPSyrG1SW+jX2G72c2TmoCzV2FPzmZrbcL3alz/MdN2OewEAALZeFRD1fKG2kLVKKAqFD3b/cl/dWfmi4xAU1Ud9dU7dyWLeCAg+NIwSyhKBLBVicpcynpHp+UKFPq0S9gkriTon0jZHvm7u9uoTYfum5rY8dyez87h02TyvS9wLAADweagCol5C0XOG2koWBcIrO6uoqE7UR311TiwPCG2BwwYpBYt5lgcJu9Kk8/S5bfXJtJXnVdfxffvO7RmP/6hrhWvU6rvGasczofBCiraS+6iP+uqcSDVfluahnB/bnjq2yvosM/Ob12VZVuvfdX8AAMA2qgKi3lTWyyhhS1mrhvWAqLrQrr46J6Kt3L6VOR8s4lClFb2dRXGWX/EzjbYtbBX75iEhZsh46iGycd30WKPxTEiBTy+j6HnDPuoTXlyJtM2R6sL8NL53z9yG+nwOwvc/WWRubxn377q3AABgO40fEPsCQCNw1Ff59Dm022OprUSGtlSIGTKeBvM7W8eaGM+ExguIYSXPlHUDon4WNySfi/Jz1b/r3gIAgG017hazwsGgFUQbEhQa6sGlZduzpBWpwQFxyHhKuu7F709ct2s8E5p2i7lnPlvPy1X1+TX8c4j5fdSFov4d9xYAAGytkV9Sqa8YBYkg4nWtKtXbBgSayIDxlCGmOM51XrdjPBOa7CWVXG/gTpxn6w/1HOIiK7aSo/5d9xYAAGyrKiCO9Wduet8abgkcao+e6zOrfo22EOaGhJjc/x6P/9y9grnpZxDH+zM39TkyAdq2p44tW+/noX3Ouu4tAADYTlVAlNH+UHYZnKpiQ0Fr4ChW8Yr+9RW/YpWuuE7bW8y2T0uQka7x5IoQGdpSvyNIjGdia/+hbP9dynGbUo3dftfUsTW4f9e9BQAA2ygKiKLgp9VBbSHrOUO9jKKiY9Wpjf+icjlsSFTRyyjhhZRQ+C8qAABgXY2AKNo61vOFeglFbyqr6Fh1yf+ego3Q1rGeLwwvrqjoWHWNbWUAAIBP0BoQAQAA8OUiIAIAACBCQAQAAECEgAgAAIAIAREAAAARAiIAAAAiBEQAAABECIgAAACIEBABAAAQISACAAAgQkAEAABAhIAIAAAAw7mP9eMtyeQHZPsAAAAASUVORK5CYII=" SearchSteps="FuzzySelector, Image" />
+                      </scg:List>
+                    </uix:TargetAnchorable.Anchors>
+                  </uix:TargetAnchorable>
+                </uix:NSelectItem.Target>
+              </uix:NSelectItem>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Security Code'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_7" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[clientInfo.Rows(0)(&quot;security_code&quot;).ToString]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="822, 573, 174, 24" ElementType="InputBox" FriendlyName="'INPUT security_code'" FullSelectorArgument="&lt;webctrl id='security_code' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='security_code' tag='INPUT' type='text' class='' aaname='' /&gt;" Guid="f734ede2-2082-4898-a14c-c024e2f28965" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAALIAAAAcCAYAAADFnOX2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJGSURBVHhe7ZjtjYQgEIavajuhDKqwCSvYX9sDB8OHwyBkRdZE9n0SEmUEwXkc9+7PADABEBlMQRL59XqhoT2uRTKRAXgSEBlMAUQGUwCRwRRAZDAFEBlMwQWR32ZVi1kW1vQWYjfxXo1atBl2V5pvxH42oxdl1nc4BV+nW+RNy0QHse+WOXJV6k1befn4K/uByHfTKXIlUaMr5Bku3dvtZzGFszRnj5AQ+W46Rf60WnlB/KdaSCY+42kqKSQ/d8dKG00/aWxfivH7eIHKL4Ybro7XXFTjCtmahag0R4hpu8Ys3ngOYAidIjt4clzyZHq87LGbJFKr7XX4sYfy8mNHEesYR+TryXASprXVEGvO5M9jtNckcus5gFFcEJnDpN4zJkRy14TktsRpCUnHrNIVMX4/IW4RZ3wicjG+tR8Wa40DwxgkcoCSxhPIKjY1H2tWJZl4fn4mZuE/JdyxqtmTVdcKhaz7i1LuR4p8/BzAOPpEriaeVcEDsRKtCnhG1laMcEK5PreuljzuOla9E6y/mJ/Jeqoig2/QWZG9sFLGvDK1Pu1CHIpF0fIYzRnHSSn4eTbHjvujT682VntxAv4+fLzco1hz9jIfrTnO1XoOYBSdInvoPwM2gakVsvgEH35OKaH72JRoixfB9ysroa+qFKiLHMUTc3nhRF+NcG1qclC25vp+/Jp5vPEcwBAuifwIpPxgSqYXmar7R+UYPJl5RU6felTjX2D6igx+A4gMpgAigymoioyG9rQWSSID8GQgMpgAY/4BeHnQlLMGa48AAAAASUVORK5CYII=" InformativeScreenshot="6dc3a15b129f0413f7f19508aa4c6b3f.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Credit Card Number'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NTypeInto_8" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Text="[clientInfo.Rows(0)(&quot;number&quot;).ToString]" Version="V1">
+                <uix:NTypeInto.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="646, 612, 174, 24" ElementType="InputBox" FriendlyName="'INPUT card_number'" FullSelectorArgument="&lt;webctrl id='card_number' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl id='card_number' tag='INPUT' type='text' class='' aaname='' /&gt;" Guid="386f7386-0a8f-4348-8802-2ed29282c823" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAALIAAAAcCAYAAADFnOX2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIwSURBVHhe7ZjtbcMgEIY7tTdhDKZgCU+QX96BcsfXQbDj4FDV5H0kpAAXOMTTC+qPBWACIDKYgiTy4/FAQ7tdixQiA3AnIDKYAogMpgAigymAyGAKIDKYgmsib8aqZbFLbHoNE1dZrV6UNVvoSsKeqp7kce2++Uk2a9RiP3YsMIx+kVft5JXi+Ev/jMyvRS73dkDkr6ZTZBKtccEs046Ab/FKZG2NUWVVhshfTZ/IT9V4B45rPD1IOqWtpgoe15Gx2s29EHllyUQOUuRa6qIf5DQ0JvLiGNGXsS6fmFv5pPF/0H6u2q8+HxhKv8jKuGs+oqraLGqQM0iTK10Zu7lqm2JrpJS0Zv5SHpefiaLv5cz5Bxljn2Pj3u1Yv2WQPG3vci7WkOcDoxkocg1JIEUWoj6tJ2JrnqSUa54XOUt21K/nKFUnNg3Ue7hPu+cDw+kXubjEHfhC6ec1toZ03BXVjDkrsoP6tVitmNS/JjLnmvaTZ9s/HxhPn8juiopnQ0KM82VKGeuKJS66uyJ7qEr6N28Yr2OK/jWRaS9+JzfySBzNgSF0ikx3Vb9j/aUnIauqzT/JuxWr/MM4/UaO8BitH8db68W590VOZwr7yLn0PZlXK0cwlG6RGZaVBAot2+AIEoQ5ZdZ88YcyUqx5qyITpayxL9eLc0fiErIfPp/6r4XIFyL/OddEBuCfAJHBFEBkMAUQGUwBRAZTAJHBFOyKjIZ2txZJIgNwZyAymABrfwGF2N0dKOe4NAAAAABJRU5ErkJggg==" InformativeScreenshot="ed1884a80d1571fd4bcb0d4909a2be00.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+                </uix:NTypeInto.Target>
+              </uix:NTypeInto>
+              <uix:NSelectItem DisplayName="Select Item 'Expiration Month'" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NSelectItem_3" Item="[clientInfo.Rows(0)(&quot;exp_month&quot;).ToString]" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+                <uix:NSelectItem.Items>
+                  <scg:List x:TypeArguments="x:String" Capacity="13">
+                    <x:String>Expiration Month</x:String>
+                    <x:String>January</x:String>
+                    <x:String>February</x:String>
+                    <x:String>March</x:String>
+                    <x:String>April</x:String>
+                    <x:String>May</x:String>
+                    <x:String>June</x:String>
+                    <x:String>July</x:String>
+                    <x:String>August</x:String>
+                    <x:String>September</x:String>
+                    <x:String>October</x:String>
+                    <x:String>November</x:String>
+                    <x:String>December</x:String>
+                  </scg:List>
+                </uix:NSelectItem.Items>
+                <uix:NSelectItem.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="646, 651, 173, 20" ElementType="DropDown" FriendlyName="'Expiration Month'" FullSelectorArgument="&lt;webctrl id='expiry_month' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='expiry_month' tag='SELECT' type='' class='select_middle_size' aaname='' /&gt;" Guid="bf5efaa0-e81c-49f9-b646-c1df7bbf346b" InformativeScreenshot="78c32a960de3d8f39be06d3a66d424ba.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive" />
+                </uix:NSelectItem.Target>
+              </uix:NSelectItem>
+              <uix:NSelectItem DisplayName="Select Item 'Expiration Year'" sap:VirtualizedContainerService.HintSize="334,216" sap2010:WorkflowViewState.IdRef="NSelectItem_4" Item="[clientInfo.Rows(0)(&quot;exp_year&quot;).ToString]" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+                <uix:NSelectItem.Items>
+                  <scg:List x:TypeArguments="x:String" Capacity="8">
+                    <x:String>Expiration Year</x:String>
+                    <x:String>2014</x:String>
+                    <x:String>2015</x:String>
+                    <x:String>2016</x:String>
+                    <x:String>2017</x:String>
+                    <x:String>2018</x:String>
+                    <x:String>2019</x:String>
+                    <x:String>2020</x:String>
+                  </scg:List>
+                </uix:NSelectItem.Items>
+                <uix:NSelectItem.Target>
+                  <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="822, 651, 173, 20" ElementType="DropDown" FriendlyName="'Expiration Year'" FullSelectorArgument="&lt;webctrl id='expiry_year' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='expiry_year' tag='SELECT' type='' class='select_middle_size' aaname='' /&gt;" Guid="84ad1fb5-3e3e-4c8e-bd7c-a90836f73c33" InformativeScreenshot="51e6966b919c30ff87e2552a755f2af0.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive" />
+                </uix:NSelectItem.Target>
+              </uix:NSelectItem>
+            </Parallel>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Submit'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_6" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order" DesignTimeRectangle="975, 722, 70, 30" ElementType="Button" FriendlyName="'Submit'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='submit' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='submit' class='submit action-button' aaname='Submit' check:text='Submit' /&gt;" Guid="57da2596-6a28-4fdc-aac0-769503b01877" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEoAAAAiCAYAAAD4d09GAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF6SURBVGhD7ZpLjoMwEERzqWxyoJwHzS1G2bPkDNlnkyNkSb4dwC7jGEObj0YZVE8qCYRx2i+N2bARkgRFJeJEbX+vsvkpGS+1E+BExQYypbVDUWoARSkBFKUEUJQSQFFKAEUpARSlBFCUErCAqLvkdg7DU/bRcbHYey8P2UWvj81NssvYGoYDZooKCxu78D8QdXjI6XwPxqUHzBRlFzq5kKVFBaklzapvaVG9rR6K6O/A7FwfGPLC3u8WWl1v7jPkBX7X4MZ/zI9j0FfjcMD8Pap42hkqOp2RKEpekh386/YcojDenYfjMV9w/j0d1WbvdURbWHpHOcFWfNMlnYVq8/0DUSYoFP/4dFGn423NokrZHV/NfGbfmC5qXR2F/ckVklh4KKrCiNUWOlIUxn9DR6GDWvDY2fibvXt7BQupFj781psqyt87g7oSAxZ/9NYWQFFKAEUpARSlBFCUEkBRSgBFKQEUpQRQlBLgRPEjjW6iH2mQYSgqCZE3K9RGhi775+EAAAAASUVORK5CYII=" InformativeScreenshot="f555780db69c947e90120fe7aed07b85.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <uix:NGetText DisplayName="Get Text 'Pega Order Number'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NGetText_3" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NGetText.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/complete_order" DesignTimeRectangle="624, 359, 85, 14" FriendlyName="'Order #527133'" FullSelectorArgument="&lt;webctrl tag='B' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='B' type='' class='' /&gt;" Guid="52dac045-7143-45a3-8e83-2d8f318e2bd5" InformativeScreenshot="f0073facceefd2a70c56e2c95ee9a606.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order Products | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive" />
+              </uix:NGetText.Target>
+              <uix:NGetText.Text>
+                <OutArgument x:TypeArguments="x:String">[pegaOrderNumber]</OutArgument>
+              </uix:NGetText.Text>
+            </uix:NGetText>
+            <uix:NHover DisplayName="Hover 'Order'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NHover_1" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NHover.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/complete_order" DesignTimeRectangle="1057, 168, 33, 14" ElementType="Text" FriendlyName="'Order'" FullSelectorArgument="&lt;webctrl parentid='orders_menu' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='orders_menu' tag='A' type='' class='menu_option' aaname='Order' check:innerText='Order' /&gt;" Guid="2d309a60-101d-4d3c-9888-b1d4beb0ffa4" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAACUAAAASCAYAAADc4RcWAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADrSURBVEhL7ZO9DcMgEEbZyEUkNqFz4ylSu8sGXsCt24zg2kVmyABe4OLTgeHwRRDkwpEoXsHfx+MA9XqvcDWqVC7/ITW0CpTyNP3CxlPQ+g4GYSwXJkWBGu6z7Zsf0KBcO+1zUpwrZQXiyjx7HYhOYFDypknW9tMckjGxlDtYMJ+y5Swc26X45gFM1gYJm4rj0UF5FYUsS5lUcJ3xunDjQ+bYbW0FZsT2MctxuhS1QymU5HzLcpS9qdJKMXKkNtK/TwiSKuneSXTQ1AEdTAohMQ+vnBzkr0n4ffYdOeg9IT9IXYEqlUuVymOFDwdBZoEdLsSlAAAAAElFTkSuQmCC" InformativeScreenshot="2c8a5c4a105d0f547393912f52dc8ce4.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order Products | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NHover.Target>
+            </uix:NHover>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Quick Order'" sap:VirtualizedContainerService.HintSize="2338,156" sap2010:WorkflowViewState.IdRef="NClick_7" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="37ced9bf-4cef-466d-ae9e-2ec30c711e81" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/complete_order" DesignTimeRectangle="1058, 195, 65, 30" ElementType="Text" FriendlyName="'Quick Order'" FullSelectorArgument="&lt;webctrl parentid='order_menu' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='order_menu' tag='A' type='' class='' aaname='Quick Order' check:innerText='Quick Order' /&gt;" Guid="a9d15405-9680-4152-b619-9d2b867eba0e" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEUAAAAiCAYAAAAJfBTLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHZSURBVGhD7ZW9kcJADEbdkQNm6MQZCVUQk7kDGnBKSgnEBNRwBdDA3v5pJa0/+eDmLlPwZoDd1UpPshmeX6/gaFwKwKUAXArApQBcCsClAFwKwKUAXArApQBcCmAl5Xbeh2EYGtOi103ucxiHY7igtcYjnHb7cLqjNc2v88ikez49wygpl0NMYDeHW/vtGqaPE9riPSlZCMhjPD/UPpu/kmJ1ejlygv0e+X11vhRSOk0ipJSSuC6ezoE8+rt2xzCl822vuK+usRSZi4gN40gpqfjDtQaRpIC1kL7wPtG21nWqiWUpaSph52UTFCJmvktPgoqXYoh1uZankOoEcRJNitqsEN19V0q/r1FijbE481Ewm1OKYykyfj9dsimiqf1eI8//mZT0eaPb43mOI4vWI2Ye/aQYeVSawJw/PTqEUU/FfqcsMx+kAraSsT4reOrSZOJp6bte2Yzfn+knBeUSMfJkKRH91mfDJTj9xqOY98NEZVJyjaVIQXQ/oeJmSi5NIijm3XdKXrOaXFFSEiUhGrN4oF5AQeV6fgwo6OoClor/fdAZQb2X4MZE4LnSiLx/89/n5/tXUhyXAnEpAJcCcCkAlwJwKQCXAnApAJcCcCkAlwJwKSte4RvlUO3k1KrsjgAAAABJRU5ErkJggg==" InformativeScreenshot="b056128e9339998e816b8ba32916fe68.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Order Products | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="0, 0, 0, 0" BrowserType="Firefox" IconBase64="iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABo0lEQVR42u1WsUrEQBBNIYiFuI3d4eUQtPJMo42FaUWE/YR0toEDG5s01gtX2qS0zB+YL5B8wvoH2163ZsNMGJbdJKceWuzAI5fZ7LzZN5O5RFGwYMGC7chO53EKiH87cNwib1G1KBykxq8tSLPnp8SJJ3gK65ljjaJpwb5LXgwENqfmI+S9EtsSM8icSmkHtZ/xQcE130ZySTa7yGvoiSFCF7IpjaYc5J3vKHvV0XqDEC3UwepdHT88qcX5Uk0sRzZVdtpEenZ9rwi5QW3d68PHNz2/uKH7aoci0pdAReotYWO/eXZ1R8kaSMBGt26UWpwtNcRkUNYC4gkXee6QvSFX4y/b4OloE603iSnP/vOHMkk7CQfqLh1Xju8xeS1RJSNx4kmE7b18ipPLWzmWQE2CYiIVDBjmmgvkXoMvxcFkTUcjPbd8rJ+k1iCRIDefMJgaogImLOAAHGtNysjhWeyDGrseAwivlMMKJFbH1xjTOmDVkdIY8KOcQuxLAHwCSCtoZgaJNOSAONxKVGXXf8kF9FCXyF98E8TYhOELKViwf2tfx4R/4E2lrUIAAAAASUVORK5CYII=" InformativeScreenshot="199244fdcf04a9a85438145faa769593.png" Selector="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" Url="https://training.openspan.com/order/quick_order" />
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+    <Assign sap:VirtualizedContainerService.HintSize="2414,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Double">[invoiceTotal]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Double">[Double.Parse(subtotal.Substring(1)) + 20]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="2414,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Double">[commissionAmount]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Double">[invoiceTotal * 0.2]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{pegaOrderNumber.Substring(7), subtotal.Substring(1), commissionAmount}]" DataTable="[invoice]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="2414,22" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+  </Sequence>
+</Activity>
