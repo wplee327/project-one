@@ -1,5 +1,7 @@
 .entities/
 .local/
+.objects/
+.screenshots/
 .settings/
 p1-reqs.md
 ~*
