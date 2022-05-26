@@ -26,14 +26,6 @@ create table [payment_method] (
     [exp_year] int not null,
     [security_code] int not null
 );
-create table [order] (
-    [id] int identity(1, 1) primary key,
-    [client_id] int references client(id),
-    [date] date not null,
-    [product_name] nvarchar(50) not null,
-    [product_quantity] int not null,
-    [product_price] float not null
-);
 create table [invoice] (
     [id] int identity(1, 1) primary key,
     [client_id] int references client(id),
@@ -41,6 +33,15 @@ create table [invoice] (
     [date] date not null,
     [total] float not null,
     [commission] float not null
+);
+create table [order] (
+    [id] int identity(1, 1) primary key,
+    [client_id] int references client(id),
+    [invoice_id] int references invoice(id),
+    [date] date not null,
+    [product_name] nvarchar(50) not null,
+    [product_quantity] int not null,
+    [product_price] float not null
 );
 go
 
@@ -60,5 +61,5 @@ go
 
 select * from [client];
 select * from [payment_method];
-select * from [order];
 select * from [invoice];
+select * from [order];

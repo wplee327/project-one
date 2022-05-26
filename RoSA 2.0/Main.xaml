@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1208,2447" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1208,2487" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="66">
+    <scg:List x:TypeArguments="x:String" Capacity="37">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -41,7 +41,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="42">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="31">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -75,7 +75,7 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap:VirtualizedContainerService.HintSize="634,2382" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap:VirtualizedContainerService.HintSize="806,2382" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="x:String" Name="clientId" />
       <Variable x:TypeArguments="x:String" Name="orderDate" />
@@ -83,13 +83,14 @@
       <Variable x:TypeArguments="sd:DataTable" Name="order" />
       <Variable x:TypeArguments="ui:DatabaseConnection" Name="dbConnection" />
       <Variable x:TypeArguments="sd:DataTable" Name="invoice" />
+      <Variable x:TypeArguments="sd:DataTable" Name="invoiceId" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <av:Point x:Key="ShapeLocation">237,0</av:Point>
         <av:Size x:Key="ShapeSize">60,75</av:Size>
-        <x:Double x:Key="Width">600</x:Double>
+        <x:Double x:Key="Width">772</x:Double>
         <x:Double x:Key="Height">2346</x:Double>
         <av:PointCollection x:Key="ConnectorLocation">267,75 267,125</av:PointCollection>
       </scg:Dictionary>
@@ -105,7 +106,7 @@
           <av:PointCollection x:Key="ConnectorLocation">267,306 267,356</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEachFileX DisplayName="Process Each Order In Folder" Filter="*.xls*" Folder="..\Customer Orders" sap:VirtualizedContainerService.HintSize="334,80" sap2010:WorkflowViewState.IdRef="ForEachFileX_2" IncludeSubDirectories="False" OrderBy="NameAscFirst" SkipFolderWithoutPermission="False">
+      <ui:ForEachFileX DisplayName="Process Each Order In Folder" Filter="*.xls*" Folder="..\Customer Orders" sap:VirtualizedContainerService.HintSize="672,2288" sap2010:WorkflowViewState.IdRef="ForEachFileX_2" IncludeSubDirectories="False" OrderBy="NameAscFirst" SkipFolderWithoutPermission="False">
         <ui:ForEachFileX.Body>
           <ActivityAction x:TypeArguments="si:FileInfo, x:Int32">
             <ActivityAction.Argument1>
@@ -114,7 +115,7 @@
             <ActivityAction.Argument2>
               <DelegateInArgument x:TypeArguments="x:Int32" Name="CurrentIndex" />
             </ActivityAction.Argument2>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="638,1911" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="638,2039" sap2010:WorkflowViewState.IdRef="Sequence_5">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -201,7 +202,39 @@
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
               <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="596,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[RoSA 2.0] Inserting new data into DB.&quot;]" />
-              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[order]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="596,294" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insert Invoice Into DB" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="596,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_2" Sql="insert into [invoice] ([client_id], [pega_order_number], [date], [total], [commission]) values (@client_id, @pega_order_number, @date, @total, @commission)">
+                <ui:ExecuteNonQuery.Parameters>
+                  <InArgument x:TypeArguments="x:String" x:Key="client_id">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="clientId" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="pega_order_number">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="invoice.Rows(0)(&quot;pega_order_number&quot;).ToString" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="date">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="orderDate" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="total">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="invoice.Rows(0)(&quot;total&quot;).ToString" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="commission">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="invoice.Rows(0)(&quot;commission&quot;).ToString" />
+                  </InArgument>
+                </ui:ExecuteNonQuery.Parameters>
+              </ui:ExecuteNonQuery>
+              <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[invoiceId]" DisplayName="Run query" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="596,88" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select [invoice].[id] from [invoice] where [invoice].[client_id] = @client_id and [invoice].[date] = @date and [invoice].[pega_order_number] = @pega_order_number">
+                <ui:ExecuteQuery.Parameters>
+                  <InArgument x:TypeArguments="x:String" x:Key="client_id">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="clientId" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="date">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="orderDate" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="pega_order_number">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="invoice.Rows(0)(&quot;pega_order_number&quot;).ToString" />
+                  </InArgument>
+                </ui:ExecuteQuery.Parameters>
+              </ui:ExecuteQuery>
+              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[order]" DisplayName="Insert Order Into DB" sap:VirtualizedContainerService.HintSize="596,294" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
                 <ui:ForEachRow.Body>
                   <ActivityAction x:TypeArguments="sd:DataRow">
                     <ActivityAction.Argument>
@@ -213,28 +246,32 @@
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insert Order Into DB" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="insert into [order] ([client_id], [date], [product_name], [product_quantity], [product_price]) values (@client_id, @date, @product_name, @product_quantity, @product_price)">
+                      <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insert Order Item Into DB" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="insert into [order] ([client_id], [invoice_id], [date], [product_name], [product_quantity], [product_price]) values (@client_id, @invoice_id, @date, @product_name, @product_quantity, @product_price)">
                         <ui:ExecuteNonQuery.Parameters>
-                          <InArgument x:TypeArguments="x:String" x:Key="client_id">[clientId]</InArgument>
-                          <InArgument x:TypeArguments="x:String" x:Key="date">[orderDate]</InArgument>
-                          <InArgument x:TypeArguments="x:String" x:Key="product_name">[item("product_name").ToString]</InArgument>
-                          <InArgument x:TypeArguments="x:String" x:Key="product_quantity">[item("product_quantity").ToString]</InArgument>
-                          <InArgument x:TypeArguments="x:String" x:Key="product_price">[item("product_price").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="client_id">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="clientId" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="invoice_id">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="invoiceId.Rows(0)(&quot;id&quot;).ToString" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="date">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="orderDate" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="product_name">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="item(&quot;product_name&quot;).ToString" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="product_quantity">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="item(&quot;product_quantity&quot;).ToString" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="product_price">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="item(&quot;product_price&quot;).ToString" />
+                          </InArgument>
                         </ui:ExecuteNonQuery.Parameters>
                       </ui:ExecuteNonQuery>
                     </Sequence>
                   </ActivityAction>
                 </ui:ForEachRow.Body>
               </ui:ForEachRow>
-              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insert Invoice Into DB" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="596,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_2" Sql="insert into [invoice] ([client_id], [pega_order_number], [date], [total], [commission]) values (@client_id, @pega_order_number, @date, @total, @commission)">
-                <ui:ExecuteNonQuery.Parameters>
-                  <InArgument x:TypeArguments="x:String" x:Key="client_id">[clientId]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="pega_order_number">[invoice.Rows(0)("pega_order_number").ToString]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="date">[orderDate]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="total">[invoice.Rows(0)("total").ToString]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="commission">[invoice.Rows(0)("commission").ToString]</InArgument>
-                </ui:ExecuteNonQuery.Parameters>
-              </ui:ExecuteNonQuery>
             </Sequence>
           </ActivityAction>
         </ui:ForEachFileX.Body>
@@ -255,9 +292,7 @@
           </sap:WorkflowViewStateService.ViewState>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke GenerateProfitReport workflow" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="GenerateProfitReport.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="ui:DatabaseConnection" x:Key="dbConnection">
-                <mva:VisualBasicValue x:TypeArguments="ui:DatabaseConnection" ExpressionText="dbConnection" />
-              </InArgument>
+              <InArgument x:TypeArguments="ui:DatabaseConnection" x:Key="dbConnection">[dbConnection]</InArgument>
             </ui:InvokeWorkflowFile.Arguments>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">

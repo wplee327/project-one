@@ -119,7 +119,7 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[clientInfo]" DisplayName="Run query" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select * from [client] left join [payment_method] on [client].id = [payment_method].client_id where [client].id = @client_id">
+        <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[clientInfo]" DisplayName="Run query" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select * from [client] left join [payment_method] on [client].[id] = [payment_method].[client_id] where [client].[id] = @client_id">
           <ui:ExecuteQuery.Parameters>
             <InArgument x:TypeArguments="x:String" x:Key="client_id">[clientId]</InArgument>
           </ui:ExecuteQuery.Parameters>
@@ -503,15 +503,9 @@
     <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{pegaOrderNumber.Substring(7), invoiceTotal, commissionAmount}]" DataTable="[invoice]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="2414,22" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke GenerateAndSendInvoice workflow" sap:VirtualizedContainerService.HintSize="2414,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="GenerateAndSendInvoice.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="order">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="order" />
-        </InArgument>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="invoice">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="invoice" />
-        </InArgument>
-        <InArgument x:TypeArguments="sd:DataRow" x:Key="clientInfoRow">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataRow" ExpressionText="clientInfoRow" />
-        </InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="order">[order]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="invoice">[invoice]</InArgument>
+        <InArgument x:TypeArguments="sd:DataRow" x:Key="clientInfoRow">[clientInfoRow]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
   </Sequence>
