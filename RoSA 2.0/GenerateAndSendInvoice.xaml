@@ -7,10 +7,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1208,2688</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1208,2968</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GenerateAndSendInvoice_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="64">
+    <scg:List x:TypeArguments="x:String" Capacity="35">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -82,23 +82,24 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="GenerateAndSendInvoice" sap:VirtualizedContainerService.HintSize="633,2583" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="GenerateAndSendInvoice" sap:VirtualizedContainerService.HintSize="773,2863" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="invoiceFormatted" />
       <Variable x:TypeArguments="x:String" Name="outputFileName" />
+      <Variable x:TypeArguments="x:String" Name="outputSheetName" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="591,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[RoSA 2.0] Generating invoice file.&quot;]" />
-    <ui:BuildDataTable DataTable="[invoiceFormatted]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="591,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;product_name&quot; msdata:Caption=&quot;&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;product_quantity&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;                &lt;xs:element name=&quot;product_price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Name&quot;, String.Format(&quot;{0} {1}&quot;, clientInfoRow(&quot;first_name&quot;).ToString, clientInfoRow(&quot;last_name&quot;).ToString), &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Name" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Phone Number&quot;, clientInfoRow(&quot;phone_number&quot;).ToString.Insert(6, &quot;-&quot;).Insert(3, &quot;-&quot;), &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Phone" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_7" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Address&quot;, clientInfoRow(&quot;address&quot;).ToString, &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Address" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;&quot;, &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Spacer" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_8" />
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[order]" DisplayName="Add Order Items" sap:VirtualizedContainerService.HintSize="591,229" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="731,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[RoSA 2.0] Generating invoice file.&quot;]" />
+    <ui:BuildDataTable DataTable="[invoiceFormatted]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="731,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;product_name&quot; msdata:Caption=&quot;&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;product_quantity&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;                &lt;xs:element name=&quot;product_price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Name&quot;, String.Format(&quot;{0} {1}&quot;, clientInfoRow(&quot;first_name&quot;).ToString, clientInfoRow(&quot;last_name&quot;).ToString), &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Name" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Phone Number&quot;, clientInfoRow(&quot;phone_number&quot;).ToString.Insert(6, &quot;-&quot;).Insert(3, &quot;-&quot;), &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Phone" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_7" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Address&quot;, clientInfoRow(&quot;address&quot;).ToString, &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Customer Address" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;&quot;, &quot;&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Spacer" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_8" />
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[order]" DisplayName="Add Order Items" sap:VirtualizedContainerService.HintSize="731,229" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
@@ -115,42 +116,65 @@
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;Service fee&quot;, &quot;$20.00&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Service Fee" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;Total&quot;, invoice.Rows(0)(&quot;total&quot;).ToString}]" DataTable="[invoiceFormatted]" DisplayName="Add Total" sap:VirtualizedContainerService.HintSize="591,22" sap2010:WorkflowViewState.IdRef="AddDataRow_6" />
-    <Assign sap:VirtualizedContainerService.HintSize="591,60" sap2010:WorkflowViewState.IdRef="Assign_4">
-      <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[outputFileName]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[String.Format("..\Outbound Invoices\Invoice_{0}_{1}.xlsx", DateTime.Now.ToString("yyyy-MM-dd"), clientInfoRow(0).ToString)]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="591,1201" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;Service fee&quot;, &quot;$20.00&quot;}]" DataTable="[invoiceFormatted]" DisplayName="Add Service Fee" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;&quot;, &quot;Total&quot;, invoice.Rows(0)(&quot;total&quot;).ToString}]" DataTable="[invoiceFormatted]" DisplayName="Add Total" sap:VirtualizedContainerService.HintSize="731,22" sap2010:WorkflowViewState.IdRef="AddDataRow_6" />
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="731,131" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[outputFileName]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[String.Format("..\Outbound Invoices\Invoice_{0}_{1}.xlsx", DateTime.Now.ToString("yyyy-MM-dd"), clientInfoRow(0).ToString)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[outputSheetName]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[invoice.Rows(0)("pega_order_number").ToString]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="731,1410" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
       <ueab:ExcelProcessScopeX.Body>
         <ActivityAction x:TypeArguments="ui:IExcelProcess">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="557,1115" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="697,1324" sap2010:WorkflowViewState.IdRef="Sequence_4">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="515,1023" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="[outputFileName]">
+            <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="655,1232" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="[outputFileName]">
               <ueab:ExcelApplicationCard.Body>
                 <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="receiptBook" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="481,757" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="621,966" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="scg:List(x:String)" Name="receiptBookSheets" />
+                    </Sequence.Variables>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ueab:WriteRangeX Destination="[receiptBook.Sheet(&quot;Sheet1&quot;)]" DisplayName="Write DataTable to Excel" ExcludeHeaders="True" sap:VirtualizedContainerService.HintSize="439,157" sap2010:WorkflowViewState.IdRef="WriteRangeX_1" IgnoreEmptySource="False" Source="[invoiceFormatted]" />
-                    <ueab:FormatRangeX DisplayName="Format Cells" sap:VirtualizedContainerService.HintSize="439,137" sap2010:WorkflowViewState.IdRef="FormatRangeX_1" Range="[receiptBook.Sheet(&quot;Sheet1&quot;).Range(&quot;C:C&quot;)]">
+                    <ui:ExcelGetWorkbookSheets DisplayName="Get Workbook Sheets" sap:VirtualizedContainerService.HintSize="579,22" sap2010:WorkflowViewState.IdRef="ExcelGetWorkbookSheets_1" Sheets="[receiptBookSheets]" />
+                    <If Condition="[receiptBookSheets.Contains(&quot;Sheet1&quot;)]" sap:VirtualizedContainerService.HintSize="579,284" sap2010:WorkflowViewState.IdRef="If_1">
+                      <If.Then>
+                        <ueab:RenameSheetX DisplayName="Rename Sheet" From="[receiptBook.Sheet(&quot;Sheet1&quot;)]" sap:VirtualizedContainerService.HintSize="434,137" sap2010:WorkflowViewState.IdRef="RenameSheetX_2" To="[outputSheetName]" />
+                      </If.Then>
+                    </If>
+                    <ueab:WriteRangeX Destination="[receiptBook.Sheet(outputSheetName)]" DisplayName="Write DataTable to Excel" ExcludeHeaders="True" sap:VirtualizedContainerService.HintSize="579,157" sap2010:WorkflowViewState.IdRef="WriteRangeX_1" IgnoreEmptySource="False" Source="[invoiceFormatted]" />
+                    <ueab:FormatRangeX DisplayName="Format Cells" sap:VirtualizedContainerService.HintSize="579,137" sap2010:WorkflowViewState.IdRef="FormatRangeX_1" Range="[receiptBook.Sheet(outputSheetName).Range(&quot;C:C&quot;)]">
                       <ueab:FormatRangeX.Alignment>
                         <ui:AlignmentOptions HorizontalAlignment="xlHAlignGeneral" VerticalAlignment="xlVAlignBottom" WrapText="False" />
                       </ueab:FormatRangeX.Alignment>
@@ -161,8 +185,7 @@
                         <ueab:CurrencyFormat Currency="$" DecimalPlaces="2" SetAtTheEnd="False" UseThousandSeparator="False" />
                       </ueab:FormatRangeX.Format>
                     </ueab:FormatRangeX>
-                    <ueab:AutoFitX Columns="True" DisplayName="Autofit Range" sap:VirtualizedContainerService.HintSize="439,114" sap2010:WorkflowViewState.IdRef="AutoFitX_1" Range="[receiptBook.Sheet(&quot;Sheet1&quot;).Range(&quot;A:C&quot;)]" Rows="True" />
-                    <ueab:RenameSheetX DisplayName="Rename Sheet" From="[receiptBook.Sheet(&quot;Sheet1&quot;)]" sap:VirtualizedContainerService.HintSize="439,137" sap2010:WorkflowViewState.IdRef="RenameSheetX_1" To="[invoice.Rows(0)(&quot;pega_order_number&quot;).ToString]" />
+                    <ueab:AutoFitX Columns="True" DisplayName="Autofit Range" sap:VirtualizedContainerService.HintSize="579,114" sap2010:WorkflowViewState.IdRef="AutoFitX_1" Range="[receiptBook.Sheet(outputSheetName).Range(&quot;A:C&quot;)]" Rows="True" />
                   </Sequence>
                 </ActivityAction>
               </ueab:ExcelApplicationCard.Body>
@@ -171,8 +194,8 @@
         </ActivityAction>
       </ueab:ExcelProcessScopeX.Body>
     </ueab:ExcelProcessScopeX>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="591,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[RoSA 2.0] Sending invoice to customer.&quot;]" />
-    <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" Account="wplee.327@gmail.com" Body="[String.Format(&quot;Good day {0},{1}{1}Please find attached your invoice for today's order.{1}{1}- Warren Lee{1}Powered by RoSA 2.0&quot;, clientInfoRow(&quot;first_name&quot;).ToString, Constants.vbCrLf)]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="591,148" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" Importance="Normal" IsBodyHtml="False" IsDraft="False" Sensitivity="Normal" Subject="RoSA Invoice" To="[clientInfoRow(&quot;email&quot;).ToString]">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="731,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[RoSA 2.0] Sending invoice to customer.&quot;]" />
+    <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" Account="wplee.327@gmail.com" Body="[String.Format(&quot;Good day {0},{1}{1}Please find attached your invoice for today's order.{1}{1}- Warren Lee{1}Powered by RoSA 2.0&quot;, clientInfoRow(&quot;first_name&quot;).ToString, Constants.vbCrLf)]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="731,148" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" Importance="Normal" IsBodyHtml="False" IsDraft="False" Sensitivity="Normal" Subject="RoSA Invoice" To="[clientInfoRow(&quot;email&quot;).ToString]">
       <ui:SendOutlookMail.Files>
         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
           <InArgument x:TypeArguments="x:String">[outputFileName]</InArgument>

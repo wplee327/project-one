@@ -9,10 +9,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>2446,5845</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>2446,6291</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>PlaceOrder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="37">
+    <scg:List x:TypeArguments="x:String" Capacity="39">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -50,10 +50,12 @@
       <x:String>UiPath.Database</x:String>
       <x:String>System.Security</x:String>
       <x:String>UiPath.Database.Activities</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="32">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="33">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -86,9 +88,10 @@
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="PlaceOrder" sap:VirtualizedContainerService.HintSize="2456,5740" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="PlaceOrder" sap:VirtualizedContainerService.HintSize="2456,6186" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="itemNameEncoded" />
       <Variable x:TypeArguments="x:String" Name="itemQuantity" />
@@ -100,9 +103,11 @@
       <Variable x:TypeArguments="x:String" Name="zipCode" />
       <Variable x:TypeArguments="x:String" Name="phoneAreaCode" />
       <Variable x:TypeArguments="x:String" Name="phoneNumber" />
-      <Variable x:TypeArguments="x:Double" Name="commissionAmount" />
-      <Variable x:TypeArguments="x:Double" Name="invoiceTotal" />
+      <Variable x:TypeArguments="x:Decimal" Name="commissionAmount" />
+      <Variable x:TypeArguments="x:Decimal" Name="invoiceTotal" />
       <Variable x:TypeArguments="sd:DataRow" Name="clientInfoRow" />
+      <Variable x:TypeArguments="x:String" Name="itemName" />
+      <Variable x:TypeArguments="x:Boolean" Name="orderTabExists" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -135,38 +140,52 @@
       </Sequence>
     </Parallel>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="2414,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[RoSA 2.0] Add order items to cart.&quot;]" />
-    <uix:NApplicationCard WebDriverMode="{x:Null}" AttachMode="ByInstance" DisplayName="Use Browser Firefox: Quick Order | Pega Studio Training Web Application" sap:VirtualizedContainerService.HintSize="2414,1433" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="Simulate" ScopeGuid="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+    <ui:UiElementExists DisplayName="Element Exists 'tab item'" Exists="[orderTabExists]" sap:VirtualizedContainerService.HintSize="2414,106" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
+      <ui:UiElementExists.Target>
+        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9a152c93-b954-4b92-a276-447fb9b4179d" InformativeScreenshot="1fea24e91c4d497ca672560c18c89e4a" Selector="&lt;wnd app='firefox.exe' cls='MozillaWindowClass' title='Quick Order | Pega Studio Training Web Application — Mozilla Fir*' /&gt;&lt;uia automationid='TabsToolbar' name='Browser tabs' role='tool bar' /&gt;&lt;uia automationid='tabbrowser-tabs' role='tab' /&gt;&lt;uia name='Quick Order | Pega Studio Training Web Application' role='tab item' /&gt;" TimeoutMS="1000">
+          <ui:Target.WaitForReady>
+            <InArgument x:TypeArguments="ui:WaitForReady" />
+          </ui:Target.WaitForReady>
+        </ui:Target>
+      </ui:UiElementExists.Target>
+    </ui:UiElementExists>
+    <If Condition="[Not orderTabExists]" sap:VirtualizedContainerService.HintSize="2414,260" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Login workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Login.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <scg:Dictionary x:TypeArguments="x:String, Argument" />
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </If.Then>
+    </If>
+    <uix:NApplicationCard WebDriverMode="{x:Null}" AttachMode="ByInstance" DisplayName="Use Browser Firefox: Quick Order | Pega Studio Training Web Application" sap:VirtualizedContainerService.HintSize="2414,1433" sap2010:WorkflowViewState.IdRef="NApplicationCard_4" InteractionMode="Simulate" OpenMode="Never" ScopeGuid="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
       <uix:NApplicationCard.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="549,1217" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="549,1217" sap2010:WorkflowViewState.IdRef="Sequence_10">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[customerOrder]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="507,1123" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[customerOrder]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="507,1123" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="sd:DataRow" Name="item" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473,1007" sap2010:WorkflowViewState.IdRef="Sequence_2">
-                    <Sequence.Variables>
-                      <Variable x:TypeArguments="x:String" Name="itemName" />
-                      <Variable x:TypeArguments="x:String" Name="itemPrice" />
-                    </Sequence.Variables>
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473,1007" sap2010:WorkflowViewState.IdRef="Sequence_9">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:MultipleAssign DisplayName="Get Item Name And Quantity" sap:VirtualizedContainerService.HintSize="431,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                    <ui:MultipleAssign DisplayName="Get Item Name And Quantity" sap:VirtualizedContainerService.HintSize="431,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
                       <ui:MultipleAssign.AssignOperations>
                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
                             <ui:AssignOperation.To>
                               <OutArgument x:TypeArguments="x:String">[itemName]</OutArgument>
                             </ui:AssignOperation.To>
@@ -174,7 +193,7 @@
                               <InArgument x:TypeArguments="x:String">[item("Product Name").ToString]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
                             <ui:AssignOperation.To>
                               <OutArgument x:TypeArguments="x:String">[itemNameEncoded]</OutArgument>
                             </ui:AssignOperation.To>
@@ -182,7 +201,7 @@
                               <InArgument x:TypeArguments="x:String">[item("Product Name").ToString.Replace("'", "&amp;apos;")]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
                             <ui:AssignOperation.To>
                               <OutArgument x:TypeArguments="x:String">[itemQuantity]</OutArgument>
                             </ui:AssignOperation.To>
@@ -193,7 +212,7 @@
                         </scg:List>
                       </ui:MultipleAssign.AssignOperations>
                     </ui:MultipleAssign>
-                    <uix:NGetText DisplayName="Get Text 'Price'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NGetText_1" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                    <uix:NGetText DisplayName="Get Text 'Price'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NGetText_5" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
                       <uix:NGetText.Target>
                         <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1130, 367, 89, 86" ElementType="Text" FriendlyName="'$1.00'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='3' tag='TD' rowName=' Chai View ' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl isleaf='1' type='' tag='TD' rowName=' {0} View ' class='' /&gt;&quot;, itemNameEncoded)]" Guid="50050449-52e7-482b-9e4a-aefe2cad4f15" InformativeScreenshot="12daf034ed51992d5ff511251c5145f7.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
                           <uix:TargetAnchorable.Anchors>
@@ -207,7 +226,7 @@
                         <OutArgument x:TypeArguments="x:String">[itemPrice]</OutArgument>
                       </uix:NGetText.Text>
                     </uix:NGetText>
-                    <uix:NSelectItem DisplayName="Select Quantity" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NSelectItem_1" Item="[itemQuantity]" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                    <uix:NSelectItem DisplayName="Select Quantity" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NSelectItem_6" Item="[itemQuantity]" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
                       <uix:NSelectItem.Items>
                         <scg:List x:TypeArguments="x:String" Capacity="20">
                           <x:String>1</x:String>
@@ -242,7 +261,7 @@
                         </uix:TargetAnchorable>
                       </uix:NSelectItem.Target>
                     </uix:NSelectItem>
-                    <uix:NClick ClickType="Single" DisplayName="Click 'Order'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
+                    <uix:NClick ClickType="Single" DisplayName="Click 'Order'" sap:VirtualizedContainerService.HintSize="431,156" sap2010:WorkflowViewState.IdRef="NClick_9" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="2552584f-fb91-4b9e-bd64-201e2533bc91" Version="V1">
                       <uix:NClick.Target>
                         <uix:TargetAnchorable BrowserURL="https://training.openspan.com/order/quick_order" DesignTimeRectangle="1239, 412, 70, 30" ElementType="Button" FriendlyName="'Order'" FullSelectorArgument="&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='INPUT' type='submit' rowName=' Chai View ' /&gt;" FuzzySelectorArgument="[String.Format(&quot;&lt;webctrl id='orders_quick_order_content' tag='TABLE' /&gt;&lt;webctrl class='' tag='INPUT' type='submit' rowName=' {0} View ' aaname='Order' check:text='Order' /&gt;&quot;, itemNameEncoded)]" Guid="54455508-0eab-4a65-874f-073b5bd34855" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEoAAAAiCAYAAAD4d09GAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFGSURBVGhD7ZVLTsNAEAVzLg7EeRDXYM+SM7BnwxFYIj4xehENlVFPZ4hjhVivpJJg2jaaijNsJjOEQw3iUIPshdrcvlpIHKqQOFQhcahC4lCFxKEKiUMVEocqJA5VSBYLdXX39v3UX7SWXVv59LLd3ZvNlpYsEur64X33vJvHj581/Sw047WHXHUooQ2268dserWhsrcpbN8qESGE1viVvX/+TEOR9gOJtYCzv0pOHqr6irURA55dIjbPaNm897s45jxsJWcPxU22cxlvR28efy/CCD5zjuRffPV6c8lQMc/oPXOO5KyHueB1WWTeU30IobiYULEhHcaxlr0tot0U1+I5IptLhszmcySLhJI8iIP2gBXtpnjfyH890c4uKtQaJA5VSByqkDhUIXGoQuJQhcShColDFRKHKiR7oUwfhxrEoYaYpi+5xyUkARkH9wAAAABJRU5ErkJggg==" InformativeScreenshot="98201b3845c1c64c45a7c30125d21d6f.png" ScopeSelectorArgument="&lt;html app='firefox.exe' title='Quick Order | Pega Studio Training Web Application' /&gt;" SearchSteps="FuzzySelector" Visibility="Interactive">
                           <uix:TargetAnchorable.Anchors>
@@ -253,15 +272,15 @@
                         </uix:TargetAnchorable>
                       </uix:NClick.Target>
                     </uix:NClick>
-                    <Assign sap:VirtualizedContainerService.HintSize="431,61" sap2010:WorkflowViewState.IdRef="Assign_4">
+                    <Assign sap:VirtualizedContainerService.HintSize="431,61" sap2010:WorkflowViewState.IdRef="Assign_6">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:String">[itemPrice]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
-                        <InArgument x:TypeArguments="x:String">[(Double.Parse(itemPrice.Substring(1)) * Integer.Parse(itemQuantity)).ToString]</InArgument>
+                        <InArgument x:TypeArguments="x:String">[(Decimal.Parse(itemPrice.Substring(1)) * Integer.Parse(itemQuantity)).ToString]</InArgument>
                       </Assign.Value>
                     </Assign>
-                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{itemName, itemQuantity, itemPrice}]" DataTable="[order]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="431,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{itemName, itemQuantity, itemPrice}]" DataTable="[order]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="431,22" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
                   </Sequence>
                 </ActivityAction>
               </ui:ForEachRow.Body>
@@ -485,18 +504,18 @@
     </uix:NApplicationCard>
     <Assign sap:VirtualizedContainerService.HintSize="2414,60" sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:Double">[invoiceTotal]</OutArgument>
+        <OutArgument x:TypeArguments="x:Decimal">[invoiceTotal]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:Double">[Double.Parse(subtotal.Substring(1)) + 20]</InArgument>
+        <InArgument x:TypeArguments="x:Decimal">[Decimal.Parse(subtotal.Substring(1)) + 20]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign sap:VirtualizedContainerService.HintSize="2414,60" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:Double">[commissionAmount]</OutArgument>
+        <OutArgument x:TypeArguments="x:Decimal">[commissionAmount]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:Double">[invoiceTotal * 0.2]</InArgument>
+        <InArgument x:TypeArguments="x:Decimal">[invoiceTotal * 0.2D]</InArgument>
       </Assign.Value>
     </Assign>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="2414,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;[RoSA 2.0] Saving order information to invoice data table.&quot;]" />
