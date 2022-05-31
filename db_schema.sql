@@ -1,7 +1,7 @@
-if object_id('invoice', 'U') is not null
-drop table [invoice]
 if object_id('order', 'U') is not null
 drop table [order]
+if object_id('invoice', 'U') is not null
+drop table [invoice]
 if object_id('payment_method', 'U') is not null
 drop table [payment_method]
 if object_id('client', 'U') is not null
@@ -15,7 +15,7 @@ create table [client] (
     [company_name] nvarchar(50),
     [address] nvarchar(100) not null,
     [email] nvarchar(50) not null,
-    [phone_number] nvarchar(10)
+    [phone_number] nvarchar(10) not null
 );
 create table [payment_method] (
     [id] int identity(1, 1) primary key,
@@ -31,8 +31,8 @@ create table [invoice] (
     [client_id] int references client(id),
     [pega_order_number] nvarchar(6) not null,
     [date] date not null,
-    [total] float not null,
-    [commission] float not null
+    [total] decimal(38, 2) not null,
+    [commission] decimal(38, 2) not null
 );
 create table [order] (
     [id] int identity(1, 1) primary key,
@@ -41,7 +41,7 @@ create table [order] (
     [date] date not null,
     [product_name] nvarchar(50) not null,
     [product_quantity] int not null,
-    [product_price] float not null
+    [product_price] decimal(38, 2) not null
 );
 go
 
