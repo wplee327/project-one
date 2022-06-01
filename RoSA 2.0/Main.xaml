@@ -109,7 +109,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="452,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;[RoSA 2.0] Establishing connection to DB.&quot;]" />
-    <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="452,59" sap2010:WorkflowViewState.IdRef="DatabaseConnect_3" ProviderName="System.Data.SqlClient" ConnectionString="Data Source=wplee-server.database.windows.net;Initial Catalog=DemoDB;Persist Security Info=True;User ID=***REMOVED***;Password=***REMOVED***" DatabaseConnection="[dbConnection]" />
+    <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="452,59" sap2010:WorkflowViewState.IdRef="DatabaseConnect_3" ProviderName="System.Data.SqlClient" ConnectionString="Data Source=wplee-server.database.windows.net;Initial Catalog=DemoDB;Persist Security Info=True;User ID=;Password=" DatabaseConnection="[dbConnection]" />
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="452,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;[RoSA 2.0] Waiting for order.&quot;]" />
     <ui:TriggerScope DisplayName="Trigger Scope" sap:VirtualizedContainerService.HintSize="452,544" sap2010:WorkflowViewState.IdRef="TriggerScope_1" SchedulingMode="Sequential">
       <ui:TriggerScope.Action>
